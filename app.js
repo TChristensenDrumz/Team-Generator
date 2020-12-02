@@ -90,7 +90,7 @@ function createTeamMember() {
         }
         else {
             const teamHTML = render(employees);
-            fs.appendFile(outputPath, teamHTML);
+            fs.appendFile(outputPath, teamHTML, (err) => err ? console.error(err) : console.log("Your team site has been created!"));
         }
     });
 }
