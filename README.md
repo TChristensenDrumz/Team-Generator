@@ -15,7 +15,7 @@ The application will prompt the user for information about the team manager and 
 [Questions](#Questions)
 
 ## Installation
-All dependincies are included, use npm i in your bash/terminal to install node modules.
+All dependincies are included, use "npm i" in your bash/terminal to install node modules.
 
 ## Usage
 Refer to the tutorial link for usage.
