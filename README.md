@@ -18,7 +18,7 @@ The application will prompt the user for information about the team manager and 
 All dependincies are included, use "npm i" in your bash/terminal to install node modules.
 
 ## Usage
-Refer to the tutorial link for usage.
+Refer to the tutorial link for usage. https://drive.google.com/file/d/1R0Y07nLaYCHwH7eoZjKt_nG7edO4LpIe/preview
 
 ## License
 This project is not covered under a license.
