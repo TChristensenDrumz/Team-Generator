@@ -49,54 +49,62 @@ const questions = [
         type: 'input',
         message: "What is this manager's office number?",
         name: 'officeNumber',
-        when: (answers) => answers.registerEmployee === true && answers.role === 'Manager'
+        when: (answers) => (answers.registerEmployee === true && answers.role[0] === 'Manager')
     },
     {
         type: 'input',
-        message: "What is this engineer's office number?",
+        message: "What is this engineer's github username?",
         name: 'github',
-        when: (answers) => answers.registerEmployee === true && answers.role === 'Engineer'
+        when: (answers) => (answers.registerEmployee === true && answers.role[0] === 'Engineer')
     },
     {
         type: 'input',
         message: "Where does this intern go to school?",
         name: 'school',
-        when: (answers) => answers.registerEmployee === true && answers.role === 'Intern'
+        when: (answers) => (answers.registerEmployee === true && answers.role[0] === 'Intern')
     }
 ];
 
 function createTeamMember() {
     inquirer.prompt(questions).then(answers => {
-        if(answers.role === 'Manager') {
-            let manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-            employees.push(manager);
-        }
-        else if(answers.role === 'Engineer') {
-            let engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-            employees.push(engineer);
-        }
-        else {
-            let intern = new Intern(answers.name, answers.id, answers.email, answers.school);
-            employees.push(intern);
+        if(answers.role){
+            if(answers.role[0] === 'Manager') {
+                let manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+                employees.push(manager);
+            }
+            else if(answers.role[0] === 'Engineer') {
+                let engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+                employees.push(engineer);
+            }
+            else if(answers.role[0] === 'Intern') {
+                let intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+                employees.push(intern);
+            }
+            else {
+                console.log("Unable to add team member: role not specified");
+            }
         }
 
         if(answers.registerEmployee === true) {
             createTeamMember();
         }
-    })
+        else {
+            const teamHTML = render(employees);
+            fs.appendFile(outputPath, teamHTML);
+        }
+    });
 }
 
 createTeamMember();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-const teamHTML = render(employees);
+
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
-fs.appendFile(outputPath, teamHTML);
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
